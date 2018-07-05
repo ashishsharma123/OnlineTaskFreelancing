@@ -21,7 +21,7 @@ import { connect } from "react-redux";
         <Controls />
         <hr />
         <span>
-          <a href='https://github.com/Gigacore/React-Redux-Starter'>Fork it on Github</a>
+          <a href='https://github.com/Gigacore/React-Redux-Starter'>Fork it1 on Github</a>
         </span>
       </div>
     );
