@@ -1,0 +1,18 @@
+.subheader-container {
+    background-color: #008FB4;
+    z-index: 3;
+    height: 40px;
+}
+
+.subheader-container ul {
+    list-style-type: none;
+    margin-left: 10%;
+}
+.subheader-container ul li{
+    float: left;
+    padding: 5px;
+}
+.subheader-container ul li a{
+    text-decoration: none;
+    color: #fff;
+}
