@@ -1,0 +1,111 @@
+.static-screen {
+
+}
+
+.static-screen .container-fluid {
+    padding: 0px;
+}
+.static-screen .main-container {
+    background-color: rgb(4, 96, 119);;
+    height: 241px;
+}
+
+.static-screen .near-service-label {
+    color: #fff;
+    font-weight: 750;
+    text-transform: uppercase;
+    margin: 0px;
+    position: absolute;
+    bottom: 0px;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+
+
+}
+.static-screen .near-service-row {
+    text-align: center;
+    height: 130px;
+    position: relative;
+}
+
+.static-screen .recieve-label {
+    color: #fff;
+    font-weight: 100;
+    margin: auto;
+    width:  65%;
+
+}
+.static-screen .recieve-row {
+    text-align: center;
+}
+.static-screen .selection-row {
+    background-color: #008FB4;
+    height: 80px;
+}
+
+.static-screen .get-free-quotes {
+    background: linear-gradient(-180deg,#cf215b,#a2396b);
+    border-radius: 40px;
+    box-shadow: inset 0 -1px 0 0 rgba(0,0,0,.1);
+    color: #fff !important;
+    cursor: pointer;
+    float: left;
+    font-size: 15px;
+    height: 38px;
+    letter-spacing: .44px;
+    line-height: 31px;
+    margin: 20px 10px 0 0px;
+    overflow: hidden;
+    text-align: center;
+    text-shadow: 0 1px 1px #9a0137;
+    width: 145px;
+    padding: 3px 0px 0px 0px !important;
+}
+.static-screen .i-need-label {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 100;
+    line-height: 80px;
+    margin:auto;
+}
+.static-screen .form-control {
+    background-color: transparent;
+    line-height: 80px;
+    margin:auto;
+    top:20px;
+    position: relative;
+    border : none;
+    border-bottom: 1px #fff solid;
+    border-radius: 0px;
+    color: #fff;
+    font-size: 24px;
+    height: 40px;
+}
+.static-screen select option {
+    font-size: 24px;
+    margin: 40px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+.static-screen .what-is-airTasker-label {
+    color: rgb(58, 61, 62);
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.static-screen .main-title-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(58, 61, 62);
+    padding: 20px 0px 12px;
+}
+.static-screen .sub-title-label {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgb(131, 144, 148);
+    max-width: 180px;
+    margin: 0px auto;
+}
