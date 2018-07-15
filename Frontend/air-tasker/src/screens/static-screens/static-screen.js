@@ -94,6 +94,11 @@ class StaticScreen extends Component {
                             </div>
                         </div>
                     </div>
+                    {/* Recent Task near you */}
+                    <div>
+
+                        
+                    </div>
                 </div>
             </div>
 
