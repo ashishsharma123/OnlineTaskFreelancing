@@ -1,0 +1,44 @@
+.recent-task-row {
+    position: relative;
+    background-color: #e4e1e1;
+    width: 100%;
+    min-height: 200px;
+    margin: 0;
+    box-shadow: 5px solid #d3d3d3;
+    border-radius: 5px;
+}
+.person-image {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    position: absolute;
+    top:20px;
+    left: 20px;
+}
+.task-title {
+    position: absolute;
+    top:30px;
+    left: 70px;
+    height:20px;
+    max-width: 200px;
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    margin-bottom: 4px;
+    color: rgb(131, 144, 148);
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: clip;
+}
+.description-label {
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 65px;
+    font-size: 13px;
+    color: rgb(131, 144, 148);
+    letter-spacing: 0.35px;
+    line-height: 18px;
+    max-height: 54px;
+    text-overflow: ellipsis;
+    overflow: hidden;    
+}

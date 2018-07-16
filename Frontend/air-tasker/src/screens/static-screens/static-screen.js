@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from 'react-router-dom'
 import SubHeader from '../../components/sub-header/sub-header'
+import RecentTask from '../../components/recent-task/recent-task'
 /**
  * Static Screen Component to display Static Screen Content.
  * Will be customized on basis of url
@@ -95,9 +96,28 @@ class StaticScreen extends Component {
                         </div>
                     </div>
                     {/* Recent Task near you */}
-                    <div>
-
+                    <div className="row"><span className="recent-task-label">Recent Task Near You</span></div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
+                            <RecentTask />
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
+                            <RecentTask />
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
+                            <RecentTask />
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
+                            <RecentTask />
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
+                            <RecentTask />
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
+                            <RecentTask />
+                        </div>
                         
+
                     </div>
                 </div>
             </div>

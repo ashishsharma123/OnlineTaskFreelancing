@@ -1,12 +1,31 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Modal from 'react-responsive-modal';
 
 // import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSignupOpen: false
+    }
+  }
+
+  onOpenModal = () => {
+    this.setState({ isSignupOpen: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ isSignupOpen: false });
+  };
   render() {
     return (
+      <div>
+        <Modal open={this.state.isSignupOpen} onClose={this.onCloseModal} center>
+          
+        </Modal>
       <nav class="navbar navbar-default header">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -21,11 +40,13 @@ class Header extends Component {
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="javascript:void(0)">Help</a></li>
-            <li><a href="javascript:void(0)">Signup</a></li>
+            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true})}}>Signup</a></li>
             <li><a href="javascript:void(0)">Login</a></li>
           </ul>
       </div>
     </nav>
+    
+    </div>
     );
   }
 }
