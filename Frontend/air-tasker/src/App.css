@@ -3,6 +3,7 @@
 @import "./Styles/recent-task.css";
 @import "./Styles/static-screen.css";
 @import "./Styles/sub-header.css";
+@import "./Styles/signup.css";
 
 .center-align {
   text-align: center;
@@ -15,4 +16,10 @@
 }
 .top-margin {
   margin-top: 20px;
+}
+
+.email-varification-screen .custom-row {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left:20%;
 }

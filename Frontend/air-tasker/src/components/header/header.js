@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from 'react-responsive-modal';
-
+import Signup from '../../screens/sign-up/sign-up';
 // import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
 
@@ -9,7 +9,8 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSignupOpen: false
+      isSignupOpen: false,
+      isForSignup: true
     }
   }
 
@@ -23,8 +24,8 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <Modal open={this.state.isSignupOpen} onClose={this.onCloseModal} center>
-          
+        <Modal ref="modelRef"open={this.state.isSignupOpen} onClose={this.onCloseModal} center>
+          <Signup isForSignup={this.state.isForSignup} onClose={this.onCloseModal}/>
         </Modal>
       <nav class="navbar navbar-default header">
       <div class="container-fluid">
@@ -40,8 +41,8 @@ class Header extends Component {
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="javascript:void(0)">Help</a></li>
-            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true})}}>Signup</a></li>
-            <li><a href="javascript:void(0)">Login</a></li>
+            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: true})}}>Signup</a></li>
+            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Login</a></li>
           </ul>
       </div>
     </nav>
