@@ -8,6 +8,9 @@ import { LoadingOverlay, Loader } from 'react-overlay-loader';
 import 'react-overlay-loader/styles.css';
 import GoogleLogin from 'react-google-login';
 import { Redirect } from 'react-router-dom';
+import * as actions from './actions';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /**
  * Content of Signup screen.
@@ -43,25 +46,41 @@ class SignUp extends Component {
 			"name": this.state.email,
 			"password": this.state.password
 		}
-		//TODO dispach action for save data here.............................
-		this.props.onClose();
-		this.setState({ isLoading: true });
 		
+		this.setState({ isLoading: true });
 		sendPostRequest(url, body).then((_res) => {
+			toast.success("Sign in Successfull !!", {
+				position: toast.POSITION.TOP_RIGHT
+			  });
 			this.setState({ isLoading: false });
 			this.setState({ loginSuccess: true });
+			
+			let data = {
+				"id": _res.insertId,
+				"token": _res.access_token
+			}
+			this.props.setSignupDataInStore(data);
+			setTimeout(()=>{
+				this.props.onClose();
+			}, 100);
+			
 		}).catch(() => {
 			this.setState({ isLoading: false });
+			toast.error("Error While Logging you in !!", {
+				position: toast.POSITION.TOP_RIGHT
+			  });
 		})
 	}
 	render() {
+		console.log('***********  ', this.props.user);
 		if (this.state.loginSuccess) {
-			return <Redirect to='/email-varification'/>;
+			return <Redirect to='/verify'/>;
 		  }
 		return (
 			
 			<div className="signup-screen">
 				<Loader loading={this.state.isLoading} />
+				<ToastContainer autoClose={5000} />
 				<div class="signup-container">
 
 					<form onSubmit={(e) => this.onSubmit(e)}>
@@ -72,12 +91,7 @@ class SignUp extends Component {
 							</div>
 
 							<div class="col">
-								<a href="#" class="fb btn" disabled>
-									<i class="fa fa-facebook fa-fw"></i> Login with Facebook
-         </a>
-								<a href="#" class="twitter btn" disabled>
-									<i class="fa fa-twitter fa-fw"></i> Login with Twitter
-        </a>
+							
 								<GoogleLogin
 									clientId="764600461469-vnj1t1e7o33r8sthsocfk98ifd85fcb0.apps.googleusercontent.com"
 									buttonText="Login"
@@ -120,10 +134,16 @@ class SignUp extends Component {
 }
 
 
-const mapStateToProps = state => ({ ...state });
+const mapStateToProps = state => ({
+	user: state.User
+ });
 
 const mapDispatchToProps = dispatch => ({
 	
+		setSignupDataInStore: (userData) => {dispatch({type:actions.SIGNUP_SUCCESS,payload:userData})}
+	,
+		removeSignupDataInStore: () => {dispatch(actions.SIGNUP_FAILURE)},
+    
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

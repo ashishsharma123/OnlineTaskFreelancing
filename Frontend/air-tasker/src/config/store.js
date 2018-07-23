@@ -11,5 +11,6 @@ const getMiddleware = () => {
   }
 };
 
+
 export const store = createStore(
   reducer);

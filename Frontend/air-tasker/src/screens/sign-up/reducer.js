@@ -1,9 +1,23 @@
 import * as actions from './actions';
-  
-  export default (state = {token: true}, action) => {
+  let initialState = {
+    "id": '',
+    "password": "",
+    "name": "",
+    "contact": 0,
+    "active": 0,
+    "email": "",
+    "token": null
+}
+  export default (state = initialState, action) => {
     switch (action.type) {
-      case actions.CALL_SIGNUP_API:
-        return {...state}
+      case actions.SIGNUP_SUCCESS:
+      console.log('&&&&&&&&&   ', action.payload);
+        return Object.assign({}, state, {
+          id: action.payload.id,
+          token: action.payload.password
+        })
+      case actions.SIGNUP_FAILURE:
+        return Object.assign({}, state, initialState);
       default:
         return state;
     }
