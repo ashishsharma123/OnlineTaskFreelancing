@@ -10,7 +10,7 @@ class Footer extends Component {
         <footer class="footer-bs">
         <div class="row">
         	<div class="col-md-3 footer-brand animated fadeInLeft">
-            	<h2>Airtasker</h2>
+            	<h2>Task Mafia</h2>
                 <p>Get Your Task Done Here</p>
                 <p>© All Rights Reserved</p>
             </div>
@@ -18,9 +18,9 @@ class Footer extends Component {
             	<h4>Discover</h4>
             	<div class="col-md-6">
                     <ul class="pages">
-                        <li><a href="javascript:void(0)">AirTasker Cards</a></li>
+                        <li><a href="javascript:void(0)">Task Mafia Cards</a></li>
                         <li><a href="javascript:void(0)">How it works</a></li>
-                        <li><a href="javascript:void(0)">Airtasker for business</a></li>
+                        <li><a href="javascript:void(0)">Task Mafia for business</a></li>
                         <li><a href="javascript:void(0)">Earn money</a></li>
                         <li><a href="javascript:void(0)">New users FAQ</a></li>
                     </ul>

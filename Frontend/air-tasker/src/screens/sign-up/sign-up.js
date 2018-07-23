@@ -37,14 +37,16 @@ class SignUp extends Component {
 
 	onSubmit = (event) => {
 		event.preventDefault();
-		this.props.onClose();
-		this.setState({ loginSuccess: true });
+		
 		let url = (this.props.isForSignup) ? urls.SIGNUP_URL : urls.LOGIN_URL;
 		let body = {
 			"name": this.state.email,
 			"password": this.state.password
 		}
+		//TODO dispach action for save data here.............................
+		this.props.onClose();
 		this.setState({ isLoading: true });
+		
 		sendPostRequest(url, body).then((_res) => {
 			this.setState({ isLoading: false });
 			this.setState({ loginSuccess: true });
@@ -121,7 +123,7 @@ class SignUp extends Component {
 const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch => ({
-
+	
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

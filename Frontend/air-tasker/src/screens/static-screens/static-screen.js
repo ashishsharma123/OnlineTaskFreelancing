@@ -45,7 +45,7 @@ class StaticScreen extends Component {
                     {/* What is air Tasker Section */}
                     <div>
                         <div className="row center-align top-margin">
-                            <span className="what-is-airTasker-label">What is AirTasker?</span>
+                            <span className="what-is-airTasker-label">What is Task Manager?</span>
                         </div>
                         <div className="row">
                             <div className="col-sm-4 center-align">

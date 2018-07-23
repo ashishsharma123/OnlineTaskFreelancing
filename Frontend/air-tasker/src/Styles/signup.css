@@ -48,15 +48,19 @@
   
   /* style the submit button */
   input[type=submit] {
-    background-color: #4CAF50;
+    background-color:#173a57;
     color: white;
     cursor: pointer;
+  }
+  input[type=text], input[type=password] {
+    border-bottom: 1.2px solid #d3d3d3 !important;
   }
   /* style the submit button */
  
   input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #429d77;
   }
+  
   
   /* Two-column layout */
   .col {
