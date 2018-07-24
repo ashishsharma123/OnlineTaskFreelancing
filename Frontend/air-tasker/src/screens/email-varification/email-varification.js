@@ -67,8 +67,9 @@ class EmailVarificationScreen extends Component {
                         <div class="row custom-row">
                             <div class="col-sm-8">
                                 <div class="alert alert-success">
+                                <Link to={`/`}>
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                        ×</button>
+                                        ×</button></Link>
                                     <span class="glyphicon glyphicon-ok"></span> <strong>Welcome User</strong>
                                     <hr class="message-inner-separator" />
                                     <p>
@@ -78,8 +79,9 @@ class EmailVarificationScreen extends Component {
                         <div class="row custom-row">
                             <div class="col-sm-8">
                                 <div class="alert alert-info">
+                                <Link to={`/`}>
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                        ×</button>
+                                        ×</button></Link>
                                     <span class="glyphicon glyphicon-info-sign"></span> <strong> {(this.state.isForVerify) ? 'Activation In Progress' : 'Login Successfull !!'}</strong>
                                     <hr class="message-inner-separator" />
                                     <p>
