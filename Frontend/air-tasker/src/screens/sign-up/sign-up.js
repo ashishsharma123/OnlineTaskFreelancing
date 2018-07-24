@@ -72,9 +72,8 @@ class SignUp extends Component {
 		})
 	}
 	render() {
-		console.log('***********  ', this.props.user);
 		if (this.state.loginSuccess) {
-			return <Redirect to='/verify'/>;
+			return <Redirect to={'/verify?isEmailVerified='+this.props.user.active}/>;
 		  }
 		return (
 			

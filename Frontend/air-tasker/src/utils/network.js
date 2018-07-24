@@ -6,7 +6,7 @@ export const sendPostRequest = (url, data) => {
         axios.post(url, data)
           .then(function (response) {
               if(response.status === 200)
-                resolve(response);
+                resolve(response.data);
               else 
                 reject(response.data)  
           })

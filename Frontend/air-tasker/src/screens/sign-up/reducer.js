@@ -14,7 +14,7 @@ import * as actions from './actions';
       console.log('&&&&&&&&&   ', action.payload);
         return Object.assign({}, state, {
           id: action.payload.id,
-          token: action.payload.password
+          token: action.payload.token
         })
       case actions.SIGNUP_FAILURE:
         return Object.assign({}, state, initialState);
