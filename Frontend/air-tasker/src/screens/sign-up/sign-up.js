@@ -30,6 +30,12 @@ class SignUp extends Component {
 		this.setState({ email: e.target.value })
 	}
 
+	showMessage() {
+		toast.info("This feature will be available soon !!", {
+		  position: toast.POSITION.TOP_RIGHT
+		  });
+	  }
+
 	onPasswordChange = (e) => {
 		this.setState({ password: e.target.value })
 	}
@@ -118,11 +124,9 @@ class SignUp extends Component {
 
 				<div class="bottom-container">
 					<div class="row">
-						<div class="col">
-							<a href="#" className="btn white-color">{(this.props.isForSignup) ? 'Log in' : 'Sign Up'}</a>
-						</div>
-						<div class="col">
-							<a href="#" className="btn white-color">Forgot password?</a>
+						
+						<div class="col-12">
+							<a href="javascript:void(0)" className="btn white-color" onClick={(e)=>this.showMessage()}>Forgot password?</a>
 						</div>
 					</div>
 				</div>
