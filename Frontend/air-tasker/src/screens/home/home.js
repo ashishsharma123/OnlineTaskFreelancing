@@ -22,7 +22,7 @@ class Home extends Component {
             
             <div className="home-container">
             
-            <h1>Welcome to Task Mafia !!</h1>
+            <h1 className="welcome-text">Welcome to Task Mafia !!</h1>
             </div>
 
         );
