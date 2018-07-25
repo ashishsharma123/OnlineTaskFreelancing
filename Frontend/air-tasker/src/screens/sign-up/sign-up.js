@@ -55,6 +55,15 @@ class SignUp extends Component {
 		
 		this.setState({ isLoading: true });
 		sendPostRequest(url, body).then((_res) => {
+			if(typeof _res == "string" && _res.indexOf('Got error')>-1) {
+				toast.error("Invalid credentials !!", {
+					position: toast.POSITION.TOP_RIGHT
+				  });
+				  this.setState({ isLoading: false });
+			this.setState({ loginSuccess: false });
+				return;
+			}
+			
 			toast.success("Sign in Successfull !!", {
 				position: toast.POSITION.TOP_RIGHT
 			  });
