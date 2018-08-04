@@ -51,7 +51,7 @@ class Header extends Component {
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="javascript:void(0)">Help</a></li>
-            {(this.props.user.isLoggedIn)? '':<li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: true})}}>Signup</a></li>}
+            {(this.props.user.isLoggedIn)? '':<li><a href="javascript:void(0)" >Signup</a></li>}
             {(this.props.user.isLoggedIn)?
              <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Logout</a></li>:
              <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Login</a></li>
