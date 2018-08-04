@@ -8,8 +8,7 @@ import { Link } from 'react-router-dom'
 class SubHeader extends Component {
     constructor(props) {
         super(props);
-        let urlArray = window.location.href.split('/');
-        this.urlName = urlArray[urlArray.length-1];
+        
     }
     render() {
         return (
@@ -17,7 +16,7 @@ class SubHeader extends Component {
                 <ul>
                     <li><a href="javascript:void(0)">Home</a></li>
                     <li><a href="javascript:void(0)">/</a></li>
-                    <li><a href="javascript:void(0)">{this.urlName}</a></li>
+                    <li><a href="javascript:void(0)">{this.props.linkName}</a></li>
                 </ul>
                         
                         </div>

@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import SubHeader from '../../components/sub-header/sub-header'
 import RecentTask from '../../components/recent-task/recent-task'
 import { sendGetRequest } from '../../utils/network';
+import {STATIC_PAGE_URL} from '../../config/configuration';
+import { LoadingOverlay, Loader } from 'react-overlay-loader';
+import 'react-overlay-loader/styles.css';
 /**
  * Static Screen Component to display Static Screen Content.
  * Will be customized on basis of url
@@ -14,25 +17,28 @@ class StaticScreen extends Component {
         this.state = {
             dataSource: undefined
         }
-        sendGetRequest(url).then(_res => {
+        let urlArray = window.location.href.split('/');
+        this.urlName = urlArray[urlArray.length-2];
+        sendGetRequest(STATIC_PAGE_URL+this.urlName).then(_res => {
             this.setState({dataSource: _res});
         })
         .catch(err=>{
-
+            console.log('error  ', err);
         })
     }
     render() {
         return (
             <div className="static-screen">
 
-                <SubHeader linkName="abc"></SubHeader>
+                <SubHeader linkName={this.urlName}></SubHeader>
+                {(this.state.dataSource)? 
                 <div className="container-fluid">
                     <div className="main-container">
                         <div className="row center-align near-service-row">
-                            <h1 className="near-service-label">Auto Services Near You</h1>
+                            <h1 className="near-service-label">{this.state.dataSource.mainTitle}</h1>
                         </div>
                         <div className="row recieve-row">
-                            <h2 className="recieve-label">Receive no-obligation quotes from reviewed, rated & trusted Mechanics in minutes.</h2>
+                            <h2 className="recieve-label">{this.state.dataSource.subtitle}</h2>
                         </div>
 
                     </div>
@@ -108,28 +114,23 @@ class StaticScreen extends Component {
                     {/* Recent Task near you */}
                     <div className="row"><span className="recent-task-label">Recent Task Near You</span></div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
-                            <RecentTask />
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
-                            <RecentTask />
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
-                            <RecentTask />
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
-                            <RecentTask />
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
-                            <RecentTask />
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
-                            <RecentTask />
-                        </div>
+                        {
+                            this.state.dataSource.recentTask.map((_item, index)=>{
+                                return (
+                                    <div class="col-xs-12 col-sm-6 col-md-4 parent-row">
+                                        <RecentTask data={this.state.dataSource.recentTask[index]}/>
+                                    </div>
+                                )
+                            })
+                        }
+                        
+                        
                         
 
                     </div>
                 </div>
+                : 
+                <Loader loading={(!this.state.dataSource)? true: false} /> }
             </div>
 
         );

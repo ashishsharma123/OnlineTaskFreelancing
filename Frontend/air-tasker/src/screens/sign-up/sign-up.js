@@ -49,13 +49,13 @@ class SignUp extends Component {
 		
 		let url = (this.props.isForSignup) ? urls.SIGNUP_URL : urls.LOGIN_URL;
 		let body = {
-			"name": this.state.email,
+			"email": this.state.email,
 			"password": this.state.password
 		}
 		
 		this.setState({ isLoading: true });
 		sendPostRequest(url, body).then((_res) => {
-			if(typeof _res == "string" && _res.indexOf('Got error')>-1) {
+			if(_res.status == 201) {
 				toast.error("Invalid credentials !!", {
 					position: toast.POSITION.TOP_RIGHT
 				  });
@@ -63,23 +63,26 @@ class SignUp extends Component {
 			this.setState({ loginSuccess: false });
 				return;
 			}
-			
+			else if(_res.status == 200){
 			toast.success("Sign in Successfull !!", {
 				position: toast.POSITION.TOP_RIGHT
 			  });
 			this.setState({ isLoading: false });
-			
+			_res = _res.data;
 			let data = {
-				"id": _res.id,
-				"token": _res.token,
-				"active": _res.active
+				"id": (this.props.isForSignup) ? _res.insertId : _res.id,
+				"token": (this.props.isForSignup) ? _res.access_token : _res.token,
+				"active": (this.props.isForSignup)? false : _res.active
 			}
 			this.props.setSignupDataInStore(data);
+			window.localStorage.setItem("user", JSON.stringify(this.props.user));
 			this.setState({ loginSuccess: true });
 			setTimeout(()=>{
 				this.props.onClose();
 			}, 100);
-			
+		} else{
+			throw new Error('Something Went wrong')
+		}
 		}).catch(() => {
 			this.setState({ isLoading: false });
 			toast.error("Error While Logging you in !!", {
@@ -89,7 +92,10 @@ class SignUp extends Component {
 	}
 	render() {
 		if (this.state.loginSuccess) {
-			return <Redirect to={'/verify?isEmailVerified='+this.props.user.active}/>;
+			if(this.props.user.active == 1)
+				return <Redirect to={'/register-step-1'}/>;
+			else
+				return <Redirect to={'/verify?isEmailVerified='+this.props.user.active}/>;
 		  }
 		return (
 			

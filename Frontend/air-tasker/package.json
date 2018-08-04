@@ -10,6 +10,7 @@
     "react-bootstrap-typeahead": "^3.2.0",
     "react-dom": "^16.4.1",
     "react-google-login": "^3.2.1",
+    "react-images-upload": "^1.2.0",
     "react-loading-overlay": "^0.3.0",
     "react-multistep": "^3.2.1",
     "react-overlay-loader": "0.0.3",

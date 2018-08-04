@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
+import {logout} from '../../screens/sign-up/actions';
+
 
 class Header extends Component {
   constructor(props) {
@@ -30,6 +32,11 @@ class Header extends Component {
   onCloseModal = () => {
     this.setState({ isSignupOpen: false });
   };
+  onLogout = () => {
+    this.props.logout();
+    window.localStorage.clear();
+
+  }
   render() {
     return (
       <div>
@@ -51,9 +58,9 @@ class Header extends Component {
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="javascript:void(0)">Help</a></li>
-            {(this.props.user.isLoggedIn)? '':<li><a href="javascript:void(0)" >Signup</a></li>}
+            {(this.props.user.isLoggedIn)? '':<li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: true})}}>Signup</a></li>}
             {(this.props.user.isLoggedIn)?
-             <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Logout</a></li>:
+             <li><Link to={`/`} onClick={(e)=>{this.onLogout()}}><a href="javascript:void(0)">Logout</a></Link></li>:
              <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Login</a></li>
              }
             
@@ -71,7 +78,7 @@ const mapStateToProps = state => ({
  });
 
 const mapDispatchToProps = dispatch => ({
-	
+	logout: () => {dispatch(logout())}
     
 });
 
