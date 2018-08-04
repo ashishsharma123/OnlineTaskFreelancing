@@ -12,6 +12,4 @@ const getMiddleware = () => {
 };
 
 
-export const store = createStore(
-  reducer);
-  window.store = store;
+export const store = createStore(reducer, getMiddleware());
