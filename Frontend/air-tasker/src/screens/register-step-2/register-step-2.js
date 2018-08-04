@@ -49,15 +49,15 @@ class RegisterStep2 extends Component {
         formData.append("imgUploader", blob);
         let user = JSON.parse(window.localStorage.getItem('user'));
         formData.append("token", user.token);
-
+        this.setState({isLoading: true});
         sendPostRequest(UPLOAD_IMAGE_URL, formData, true, user.token).then((_res) => {
-            debugger
+            this.setState({isLoading: false});
             if(_res.status == 200) {
                 this.setState({imgUrl: _res.data.imgUrl})
             }
         })
             .catch((err) => {
-                debugger;
+                this.setState({isLoading: false});
             })
     }
 
