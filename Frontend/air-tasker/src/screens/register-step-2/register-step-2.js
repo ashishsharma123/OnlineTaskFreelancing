@@ -13,6 +13,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RegisterStep3 from '../register-step-3/register-step-3';
 import { WithContext as ReactTags } from 'react-tag-input';
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+} from 'react-places-autocomplete';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 /**
  * Content of Signup screen.
@@ -24,42 +30,15 @@ class RegisterStep2 extends Component {
         this.state = {
             isPopupOpen: true,
             isActive: 0,
-            tags: [{ id: 1, text: "Thailand" }, { id: 2, text: "India" }],
             suggestions: COUNTRIES,
-
+            multiple: true
         }
+        this.selectedCategory = [];
 
     }
 
-    handleDelete(i) {
-        this.setState({
-            tags: this.state.tags.filter((tag, index) => index !== i),
-        });
-    }
-
-    handleAddition(tag) {
-        let { tags } = this.state;
-        this.setState({ tags: [...tags, { id: tags.length + 1, text: tag }] });
-    }
-
-    handleDrag(tag, currPos, newPos) {
-        const tags = [...this.state.tags];
-
-        // mutate array
-        tags.splice(currPos, 1);
-        tags.splice(newPos, 0, tag);
-
-        // re-render
-        this.setState({ tags });
-    }
-
-    handleTagClick(index) {
-        console.log('The tag at index ' + index + ' was clicked');
-    }
-
-    componentDidMount() {
-        var input = document.getElementById('autocomplete');
-        var autocomplete = new google.maps.places.Autocomplete(input);
+    handleCategoryInputChange = (e) => {
+        this.selectedCategory = e;
     }
 
     onOpenModal = () => {
@@ -70,36 +49,19 @@ class RegisterStep2 extends Component {
         this.setState({ isPopupOpen: false });
     };
 
-    onEmailChange = (e) => {
-        this.setState({ email: e.target.value })
-    }
-
     showMessage() {
         toast.info("This feature will be available soon !!", {
             position: toast.POSITION.TOP_RIGHT
         });
     }
-
-
-    handleDelete(i) {
-        const tags = this.state.tags.slice(0)
-        tags.splice(i, 1)
-        this.setState({ tags })
-    }
-
-    handleAddition(tag) {
-        const tags = [].concat(this.state.tags, tag)
-        this.setState({ tags })
-    }
-
-
-
+    
     onSubmit = (event) => {
         event.preventDefault();
 
     }
 
     onNext() {
+        console.log('this.selected  ', this.state.selectedCategory);
         if (this.state.isActive < 3) {
             this.setState({ isActive: ++this.state.isActive })
         }
@@ -114,6 +76,7 @@ class RegisterStep2 extends Component {
 
     render() {
         const { tags, suggestions } = this.state;
+        console.log('this.selected   ', this.state.selectedCategory)
         return (
             <div className="register-step-2">
                 <Modal ref="modelRef" open={this.state.isPopupOpen} onClose={this.onCloseModal} center>
@@ -129,13 +92,21 @@ class RegisterStep2 extends Component {
                             </div>
                             <div className={(this.state.isActive == 1) ? 'display' : 'hide'}>Contact Info:
 
-                            <ReactTags
+                            {/* <ReactTags
                                     tags={tags}
                                     suggestions={suggestions}
                                     handleDelete={this.handleDelete}
                                     handleAddition={this.handleAddition}
                                     handleDrag={this.handleDrag}
                                     handleTagClick={this.handleTagClick}
+                                /> */}
+                                <Typeahead
+                                    labelKey="name"
+                                    multiple={this.state.multiple}
+                                    options={this.state.suggestions}
+                                    placeholder="Choose Task Category..."
+                                    selected={this.state.selectedCategory}
+                                    onChange={(e)=>{this.handleCategoryInputChange(e)}}
                                 />
                                 <p><input placeholder="Your City" id="autocomplete" name="phone" /></p>
                             </div>

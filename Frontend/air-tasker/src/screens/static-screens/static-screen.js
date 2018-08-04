@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from 'react-router-dom'
 import SubHeader from '../../components/sub-header/sub-header'
 import RecentTask from '../../components/recent-task/recent-task'
+import { sendGetRequest } from '../../utils/network';
 /**
  * Static Screen Component to display Static Screen Content.
  * Will be customized on basis of url
@@ -10,6 +11,15 @@ import RecentTask from '../../components/recent-task/recent-task'
 class StaticScreen extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            dataSource: undefined
+        }
+        sendGetRequest(url).then(_res => {
+            this.setState({dataSource: _res});
+        })
+        .catch(err=>{
+
+        })
     }
     render() {
         return (

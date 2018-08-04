@@ -6,6 +6,7 @@ import Signup from '../../screens/sign-up/sign-up';
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { connect } from 'react-redux';
 
 class Header extends Component {
   constructor(props) {
@@ -36,10 +37,10 @@ class Header extends Component {
           <Signup isForSignup={this.state.isForSignup} onClose={this.onCloseModal}/>
         </Modal>
         <ToastContainer autoClose={5000} />
-      <nav class="navbar navbar-default header">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="javascript:void(0)">
+      <nav className="navbar navbar-default header">
+      <div className="container-fluid">
+        <div className="navbar-header">
+          <a className="navbar-brand" href="javascript:void(0)">
             <img alt="Brand" className="main-logo" src="https://www.taskmafia.com/wp-content/uploads/2018/06/cropped-TM_Logo_Transparent-1.png"/>
           </a>
         </div>
@@ -50,8 +51,13 @@ class Header extends Component {
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="javascript:void(0)">Help</a></li>
-            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: true})}}>Signup</a></li>
-            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Login</a></li>
+            {(this.props.user.isLoggedIn)? '':<li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: true})}}>Signup</a></li>}
+            {(this.props.user.isLoggedIn)?
+             <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Logout</a></li>:
+             <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Login</a></li>
+             }
+            
+            
           </ul>
       </div>
     </nav>
@@ -60,5 +66,13 @@ class Header extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+	user: state.User
+ });
 
-export default Header;
+const mapDispatchToProps = dispatch => ({
+	
+    
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

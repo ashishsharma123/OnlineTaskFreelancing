@@ -68,13 +68,14 @@ class SignUp extends Component {
 				position: toast.POSITION.TOP_RIGHT
 			  });
 			this.setState({ isLoading: false });
-			this.setState({ loginSuccess: true });
 			
 			let data = {
-				"id": _res.insertId,
-				"token": _res.access_token
+				"id": _res.id,
+				"token": _res.token,
+				"active": _res.active
 			}
 			this.props.setSignupDataInStore(data);
+			this.setState({ loginSuccess: true });
 			setTimeout(()=>{
 				this.props.onClose();
 			}, 100);

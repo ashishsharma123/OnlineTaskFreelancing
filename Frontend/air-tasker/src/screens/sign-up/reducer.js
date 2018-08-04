@@ -6,7 +6,8 @@ import * as actions from './actions';
     "contact": 0,
     "active": 0,
     "email": "",
-    "token": null
+    "token": null,
+    "isLoggedIn": false
 }
   export default (state = initialState, action) => {
     switch (action.type) {
@@ -14,7 +15,9 @@ import * as actions from './actions';
       console.log('&&&&&&&&&   ', action.payload);
         return Object.assign({}, state, {
           id: action.payload.id,
-          token: action.payload.token
+          token: action.payload.token,
+          active: action.payload.active,
+          isLoggedIn: true
         })
       case actions.SIGNUP_FAILURE:
         return Object.assign({}, state, initialState);
