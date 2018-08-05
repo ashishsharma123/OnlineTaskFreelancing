@@ -6,6 +6,7 @@ import EmailVarificationScreen from '../screens/email-varification/email-varific
 import Home from '../screens/home/home';
 import RegisterStep1 from '../screens/register-step-1/register-step-1';
 import RegisterStep2 from '../screens/register-step-2/register-step-2';
+import Home2 from '../screens/home2/home2';
 
 const Router = () => (
     
@@ -22,6 +23,7 @@ const Router = () => (
             <Route path='/verify' component={EmailVarificationScreen} />  
             <Route path='/register-step-1' component={RegisterStep1} />
             <Route path='/register-step-2' component={RegisterStep2} />  
+            <Route path='/home-2' component={Home2} />  
         </Switch>
 )
 

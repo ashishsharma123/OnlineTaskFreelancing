@@ -166,6 +166,7 @@ class RegisterStep2 extends Component {
                                     options={this.state.suggestions}
                                     placeholder="Choose Task Category..."
                                     selected={this.state.selectedCategory}
+                                    className="myclass"
                                     onChange={(e) => { this.handleCategoryInputChange(e) }}
                                 />
                                 </div>
