@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from 'react-router-dom'
 import SubHeader from '../../components/sub-header/sub-header'
 import RecentTask from '../../components/recent-task/recent-task'
-import { sendGetRequest } from '../../utils/network';
+import { sendGetRequest, sendPostRequest } from '../../utils/network';
 import {STATIC_PAGE_URL} from '../../config/configuration';
 import { LoadingOverlay, Loader } from 'react-overlay-loader';
 import 'react-overlay-loader/styles.css';
@@ -19,7 +19,7 @@ class StaticScreen extends Component {
         }
         let urlArray = window.location.href.split('/');
         this.urlName = urlArray[urlArray.length-2];
-        sendGetRequest(STATIC_PAGE_URL+this.urlName).then(_res => {
+        sendPostRequest(STATIC_PAGE_URL,{id: this.urlName}).then(_res => {
             this.setState({dataSource: _res});
         })
         .catch(err=>{
