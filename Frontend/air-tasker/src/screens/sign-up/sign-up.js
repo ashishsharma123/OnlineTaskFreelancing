@@ -6,7 +6,7 @@ import { sendPostRequest } from '../../utils/network';
 import * as urls from '../../config/configuration';
 import { LoadingOverlay, Loader } from 'react-overlay-loader';
 import 'react-overlay-loader/styles.css';
-import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import { Redirect } from 'react-router-dom';
 import * as actions from './actions';
 import { toast, ToastContainer } from 'react-toastify';
@@ -15,6 +15,10 @@ import 'react-toastify/dist/ReactToastify.css';
 /**
  * Content of Signup screen.
  */
+
+const responseFacebook = (response) => {
+	console.log(response);
+}
 class SignUp extends Component {
 	constructor(props) {
 		super(props);
@@ -32,9 +36,9 @@ class SignUp extends Component {
 
 	showMessage() {
 		toast.info("This feature will be available soon !!", {
-		  position: toast.POSITION.TOP_RIGHT
-		  });
-	  }
+			position: toast.POSITION.TOP_RIGHT
+		});
+	}
 
 	onPasswordChange = (e) => {
 		this.setState({ password: e.target.value })
@@ -46,59 +50,59 @@ class SignUp extends Component {
 
 	onSubmit = (event) => {
 		event.preventDefault();
-		
+
 		let url = (this.props.isForSignup) ? urls.SIGNUP_URL : urls.LOGIN_URL;
 		let body = {
 			"email": this.state.email,
 			"password": this.state.password
 		}
-		
+
 		this.setState({ isLoading: true });
 		sendPostRequest(url, body).then((_res) => {
-			if(_res.status == 201) {
+			if (_res.status == 201) {
 				toast.error("Invalid credentials !!", {
 					position: toast.POSITION.TOP_RIGHT
-				  });
-				  this.setState({ isLoading: false });
-			this.setState({ loginSuccess: false });
+				});
+				this.setState({ isLoading: false });
+				this.setState({ loginSuccess: false });
 				return;
 			}
-			else if(_res.status == 200){
-			toast.success("Sign in Successfull !!", {
-				position: toast.POSITION.TOP_RIGHT
-			  });
-			this.setState({ isLoading: false });
-			_res = _res.data;
-			let data = {
-				"id": (this.props.isForSignup) ? _res.insertId : _res.id,
-				"token": (this.props.isForSignup) ? _res.access_token : _res.token,
-				"active": (this.props.isForSignup)? false : _res.active
+			else if (_res.status == 200) {
+				toast.success("Sign in Successfull !!", {
+					position: toast.POSITION.TOP_RIGHT
+				});
+				this.setState({ isLoading: false });
+				_res = _res.data;
+				let data = {
+					"id": (this.props.isForSignup) ? _res.insertId : _res.id,
+					"token": (this.props.isForSignup) ? _res.access_token : _res.token,
+					"active": (this.props.isForSignup) ? false : _res.active
+				}
+				this.props.setSignupDataInStore(data);
+				window.localStorage.setItem("user", JSON.stringify(this.props.user));
+				this.setState({ loginSuccess: true });
+				setTimeout(() => {
+					this.props.onClose();
+				}, 100);
+			} else {
+				throw new Error('Something Went wrong')
 			}
-			this.props.setSignupDataInStore(data);
-			window.localStorage.setItem("user", JSON.stringify(this.props.user));
-			this.setState({ loginSuccess: true });
-			setTimeout(()=>{
-				this.props.onClose();
-			}, 100);
-		} else{
-			throw new Error('Something Went wrong')
-		}
 		}).catch(() => {
 			this.setState({ isLoading: false });
 			toast.error("Error While Logging you in !!", {
 				position: toast.POSITION.TOP_RIGHT
-			  });
+			});
 		})
 	}
 	render() {
 		if (this.state.loginSuccess) {
-			if(this.props.user.active == 1)
-				return <Redirect to={'/register-step-1'}/>;
+			if (this.props.user.active == 1)
+				return <Redirect to={'/register-step-1'} />;
 			else
-				return <Redirect to={'/verify?isEmailVerified='+this.props.user.active}/>;
-		  }
+				return <Redirect to={'/verify?isEmailVerified=' + this.props.user.active} />;
+		}
 		return (
-			
+
 			<div className="signup-screen">
 				<Loader loading={this.state.isLoading} />
 				<ToastContainer autoClose={5000} />
@@ -112,16 +116,11 @@ class SignUp extends Component {
 							</div>
 
 							<div class="col">
-							
-								<GoogleLogin
-									clientId="764600461469-vnj1t1e7o33r8sthsocfk98ifd85fcb0.apps.googleusercontent.com"
-									buttonText="Login"
-									onSuccess={this.responseGoogle}
-									onFailure={this.responseGoogle}
-									buttonText="Login with Google+"
-									className="google btn"
-									fetchBasicProfile={true}
-								/>
+								<FacebookLogin
+									appId="261011391379986"
+									autoLoad={true}
+									fields="name,email,picture"
+									callback={responseFacebook} />
 							</div>
 
 							<div class="col">
@@ -140,9 +139,9 @@ class SignUp extends Component {
 
 				<div class="bottom-container">
 					<div class="row">
-						
+
 						<div class="col-12">
-							<a href="javascript:void(0)" className="btn white-color" onClick={(e)=>this.showMessage()}>Forgot password?</a>
+							<a href="javascript:void(0)" className="btn white-color" onClick={(e) => this.showMessage()}>Forgot password?</a>
 						</div>
 					</div>
 				</div>
@@ -155,14 +154,14 @@ class SignUp extends Component {
 
 const mapStateToProps = state => ({
 	user: state.User
- });
+});
 
 const mapDispatchToProps = dispatch => ({
-	
-		setSignupDataInStore: (userData) => {dispatch({type:actions.SIGNUP_SUCCESS,payload:userData})}
+
+	setSignupDataInStore: (userData) => { dispatch({ type: actions.SIGNUP_SUCCESS, payload: userData }) }
 	,
-		removeSignupDataInStore: () => {dispatch(actions.SIGNUP_FAILURE)},
-    
+	removeSignupDataInStore: () => { dispatch(actions.SIGNUP_FAILURE) },
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
