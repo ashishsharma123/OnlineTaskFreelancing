@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { sendPostRequest } from '../../utils/network';
+import { sendPostRequest, sendGetRequest } from '../../utils/network';
 import {REGISTER_STEP_2_URL} from '../../config/configuration';
 import { LoadingOverlay, Loader } from 'react-overlay-loader';
 import Modal from 'react-responsive-modal';
 import 'react-overlay-loader/styles.css';
 import { Redirect } from 'react-router-dom';
 
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { showMessage } from '../../utils/message';
 import RegisterStep3 from '../register-step-3/register-step-3';
 import { WithContext as ReactTags } from 'react-tag-input';
 import PlacesAutocomplete, {
@@ -20,8 +20,8 @@ import PlacesAutocomplete, {
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ImageUploader from 'react-images-upload';
-import { UPLOAD_IMAGE_URL } from '../../config/configuration';
-import {registerStep2} from '../../screens/sign-up/actions'
+import { UPLOAD_IMAGE_URL, FETCH_CATEGORY_URL } from '../../config/configuration';
+import {registerStep2, saveImage} from '../../screens/sign-up/actions'
 
 /**
  * Content of Signup screen.
@@ -38,9 +38,21 @@ class RegisterStep2 extends Component {
             pictures: [],
             description: '',
             isLoading: false,
-            imgUrl: undefined
+            imgUrl: this.props.user.imageUrl
         }
         this.selectedCategory = [];
+    }
+
+    fetchCategory = () => {
+        sendGetRequest(FETCH_CATEGORY_URL)
+        .then(_res=>{
+            if(_res.status == 200) {
+                this.setState({suggestions: _res.data})
+            }
+        })
+        .catch(err=>{
+
+        })
     }
 
     onDrop = (picture) => {
@@ -54,6 +66,7 @@ class RegisterStep2 extends Component {
             this.setState({isLoading: false});
             if(_res.status == 200) {
                 this.setState({imgUrl: _res.data.imgUrl})
+                this.props.saveImage(_res.data.imgUrl);
             }
         })
             .catch((err) => {
@@ -75,13 +88,9 @@ class RegisterStep2 extends Component {
 
     showMessage(_isError) {
         if(_isError) {
-            toast.error("something went wrong", {
-                position: toast.POSITION.TOP_RIGHT
-            })
+            showMessage('error', 'something went wrong');
         } else{
-            toast.info("Successfully Updated Details !!", {
-                position: toast.POSITION.TOP_RIGHT
-            });
+            showMessage('success', 'Successfully Updated Details !!');
         }
         
     }
@@ -92,7 +101,6 @@ class RegisterStep2 extends Component {
     }
 
     onNext() {
-        console.log('this.selected  ', this.state.selectedCategory);
         if (this.state.isActive < 1) {
             this.setState({ isActive: ++this.state.isActive })
         } else {
@@ -212,9 +220,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    registerStep2: (data) => {dispatch(registerStep2(data))}
-
-
+    registerStep2: (data) => {dispatch(registerStep2(data))},
+    saveImage: (imgUrl) => {dispatch(saveImage(imgUrl))}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterStep2);

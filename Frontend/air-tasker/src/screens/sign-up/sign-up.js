@@ -9,16 +9,14 @@ import 'react-overlay-loader/styles.css';
 import FacebookLogin from 'react-facebook-login';
 import { Redirect } from 'react-router-dom';
 import * as actions from './actions';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { showMessage } from '../../utils/message';
 
 /**
  * Content of Signup screen.
  */
 
-const responseFacebook = (response) => {
-	console.log(response);
-}
+
 class SignUp extends Component {
 	constructor(props) {
 		super(props);
@@ -30,22 +28,49 @@ class SignUp extends Component {
 			loginSuccess: false
 		}
 	}
+
+	onInputChange = (e, name) => {
+        this.setState({ [name]: e.target.value })
+	}
+	
 	onEmailChange = (e) => {
 		this.setState({ email: e.target.value })
 	}
 
 	showMessage() {
-		toast.info("This feature will be available soon !!", {
-			position: toast.POSITION.TOP_RIGHT
-		});
+		showMessage('info', "This feature will be available soon !!");
 	}
 
 	onPasswordChange = (e) => {
 		this.setState({ password: e.target.value })
 	}
 
-	responseGoogle = (response) => {
-		console.log(response);
+	responseFacebook = (response) => {
+		if(response.status && response.status === "unknown") {
+			showMessage('warn', 'Facebook Login Cancelled');
+		} else {
+			let reqBody = {
+				"firstName" : response.name.split(' ')[0],
+				"lastName" :  response.name.substring(response.name.indexOf(' ')),
+				"token": response.accessToken,
+				"imageUrl" : response.picture.data.url
+			}
+			this.props.loginWithFbSuccess(reqBody);
+			//this.setState({ isLoading: true });
+			this.setState({ loginSuccess: true });
+			setTimeout(() => {
+				this.props.onClose();
+			}, 100);
+			// sendPostRequest(urls.LOGIN_WITH_FB_URL, reqBody)
+			// .then(_res=>{
+				// showMessage('success', "Sign in Successfull !!");
+				// this.setState({ isLoading: false });
+				
+			// })
+			// .catch(_err=>{
+
+			// })
+		}
 	}
 
 	onSubmit = (event) => {
@@ -60,17 +85,13 @@ class SignUp extends Component {
 		this.setState({ isLoading: true });
 		sendPostRequest(url, body).then((_res) => {
 			if (_res.status == 201) {
-				toast.error("Invalid credentials !!", {
-					position: toast.POSITION.TOP_RIGHT
-				});
+				showMessage('error', "Invalid credentials !!");
 				this.setState({ isLoading: false });
 				this.setState({ loginSuccess: false });
 				return;
 			}
 			else if (_res.status == 200) {
-				toast.success("Sign in Successfull !!", {
-					position: toast.POSITION.TOP_RIGHT
-				});
+				showMessage('success', "Sign in Successfull !!");
 				this.setState({ isLoading: false });
 				_res = _res.data;
 				let data = {
@@ -89,9 +110,7 @@ class SignUp extends Component {
 			}
 		}).catch(() => {
 			this.setState({ isLoading: false });
-			toast.error("Error While Logging you in !!", {
-				position: toast.POSITION.TOP_RIGHT
-			});
+			showMessage('error', "Error While Logging you in !!");
 		})
 	}
 	render() {
@@ -108,7 +127,7 @@ class SignUp extends Component {
 				<ToastContainer autoClose={5000} />
 				<div class="signup-container">
 
-					<form onSubmit={(e) => this.onSubmit(e)}>
+					<form onSubmit={(e) => this.onSubmit(e)} ref="form">
 						<div class="row">
 							<h2 className="center-align">{(this.props.isForSignup) ? 'Sign Up' : 'Login'}</h2>
 							<div class="vl">
@@ -120,7 +139,7 @@ class SignUp extends Component {
 									appId="261011391379986"
 									autoLoad={true}
 									fields="name,email,picture"
-									callback={responseFacebook} />
+									callback={(e)=>{this.responseFacebook(e)}} />
 							</div>
 
 							<div class="col">
@@ -128,9 +147,9 @@ class SignUp extends Component {
 									<p>Or sign in manually:</p>
 								</div>
 
-								<input type="text" name="username" placeholder="Username" value={this.state.email} onChange={(e) => this.onEmailChange(e)} required /><br />
-								<input type="password" name="password" placeholder="Password" value={this.state.password} onChange={(e) => this.onPasswordChange(e)} required /><br /><br />
-								<input type="submit" value={(this.props.isForSignup) ? 'Sign Up' : 'Login'} />
+								<input type="text" name="username" placeholder="Username" value={this.state.email} onChange={(e) => this.onInputChange(e, 'email')} required /><br />
+								<input type="password" name="password" placeholder="Password" value={this.state.password} onChange={(e) => this.onInputChange(e, 'password')} required /><br /><br />
+								<input type="submit" disabled={false} value={(this.props.isForSignup) ? 'Sign Up' : 'Login'} />
 							</div>
 
 						</div>
@@ -158,9 +177,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 
-	setSignupDataInStore: (userData) => { dispatch({ type: actions.SIGNUP_SUCCESS, payload: userData }) }
-	,
+	setSignupDataInStore: (userData) => { dispatch({ type: actions.SIGNUP_SUCCESS, payload: userData }) },
 	removeSignupDataInStore: () => { dispatch(actions.SIGNUP_FAILURE) },
+	loginWithFbSuccess:(_data) => { dispatch(actions.loginWithFbSuccess(_data))}
 
 });
 

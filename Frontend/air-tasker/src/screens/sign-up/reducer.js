@@ -9,13 +9,15 @@ let user = window.localStorage.getItem('user');
     "email": "",
     "token": null,
     "isLoggedIn": false,
-    "isRegistretionComplete": false,
+    "isLoginViaFb": false,
+    "isFirstTimeLogin": false,
     "firstName": "",
     "lastName": "",
     "city": "",
     "roleId": "",
     "categories": [],
-    "description": ""
+    "description": "",
+    "imageUrl": ""
 }
   export default (state = initialState, action) => {
     switch (action.type) {
@@ -47,8 +49,17 @@ let user = window.localStorage.getItem('user');
       case actions.STEP_2_SUCCESS:
         return Object.assign({}, state, {
           categories: action.payload.categories,
-          description: action.payload.description,
-          isRegistretionComplete: true
+          description: action.payload.description
+        })
+      case actions.LOGIN_WITH_FB_SUCCESS:
+        return Object.assign({}, state, {
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          imageUrl: action.payload.imageUrl,
+          token: action.payload.token,
+          isLoginViaFb: true,
+          active:1,
+          isLoggedIn: true
         })
       default:
         return state;

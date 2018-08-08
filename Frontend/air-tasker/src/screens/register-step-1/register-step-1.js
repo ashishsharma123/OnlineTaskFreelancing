@@ -9,9 +9,9 @@ import 'react-overlay-loader/styles.css';
 import { Redirect } from 'react-router-dom';
 import {REGISTER_STEP_1_URL} from '../../config/configuration';
 import { sendPostRequest } from '../../utils/network';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import {registerStep1} from '../sign-up/actions';
+import { showMessage } from '../../utils/message';
 
 /**
  * Content of Signup screen.
@@ -22,8 +22,8 @@ class RegisterStep1 extends Component {
         console.log(props);
         this.state = {
             isPopupOpen: true,
-            firstName: "",
-            lastName: "",
+            firstName: this.props.user.firstName,
+            lastName: this.props.user.lastName,
             isLoading: false,
             city: "",
             role: "",
@@ -48,9 +48,7 @@ class RegisterStep1 extends Component {
     }
 
     showMessage() {
-        toast.info("Details Saved Successfully !!", {
-            position: toast.POSITION.TOP_RIGHT
-        });
+        showMessage('success', 'Details Saved Successfully !!');
     }
 
 
