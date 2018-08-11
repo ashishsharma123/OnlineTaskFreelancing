@@ -92,6 +92,8 @@ import Signup from '../../screens/sign-up/sign-up';
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { connect } from 'react-redux';
+import {logout} from '../../screens/sign-up/actions';
 
 class Header extends Component {
   constructor(props) {
@@ -106,6 +108,12 @@ class Header extends Component {
     toast.info("Comming Soon !!", {
       position: toast.POSITION.TOP_RIGHT
       });
+  }
+
+    onLogout = () => {
+    this.props.logout();
+    window.localStorage.clear();
+
   }
 
   onOpenModal = () => {
@@ -136,9 +144,12 @@ class Header extends Component {
             <li><a href="javascript:void(0)" onClick={(e)=>this.showMessage()}>How it works</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="javascript:void(0)">Help</a></li>
-            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: true})}}>Join</a></li>
-            <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Sign In</a></li>
+          <li><a href="javascript:void(0)">Help</a></li>
+           {(this.props.user.isLoggedIn)? '':<li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: true})}}>Join</a></li>}
+             {(this.props.user.isLoggedIn)?
+            <li><Link to={`/`} onClick={(e)=>{this.onLogout()}}><a href="javascript:void(0)">Logout</a></Link></li>:
+              <li><a href="javascript:void(0)" onClick={(e)=>{this.setState({isSignupOpen: true, isForSignup: false})}}>Sign in</a></li>
+            }
           </ul>
       </div>
     </nav>
@@ -148,4 +159,13 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+	user: state.User
+ });
+
+const mapDispatchToProps = dispatch => ({
+	logout: () => {dispatch(logout())}
+    
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

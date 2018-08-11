@@ -32,12 +32,7 @@ let user = window.localStorage.getItem('user');
         return Object.assign({}, state, initialState);
 
       case actions.ACTION_LOGOUT:
-        return Object.assign({}, state, {
-          id: "",
-          token: null,
-          active: false,
-          isLoggedIn: false
-        })
+        return Object.assign({}, state, initialState)
 
       case actions.STEP_1_SUCCESS:
         return Object.assign({}, state, {

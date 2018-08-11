@@ -26,7 +26,6 @@
 }
 
 .home-container {
-  height: 300px;
   width: 100%;
   text-align: center;
   
@@ -195,18 +194,6 @@ button:hover {
 }
 
 body{font-family: 'Heebo', sans-serif !important;}
-.center-align {
-  text-align: center;
-}
-.left-align {
-  text-align: left;
-}
-.right-align {
-  text-align: right;
-}
-.top-margin {
-  margin-top: 20px;
-}
 
 .email-varification-screen .custom-row {
   margin-top: 50px;

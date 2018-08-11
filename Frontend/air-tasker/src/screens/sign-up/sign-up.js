@@ -145,7 +145,7 @@ class SignUp extends Component {
 							<div class="col">
 								<FacebookLogin
 									appId="261011391379986"
-									autoLoad={true}
+									autoLoad={false}
 									fields="name,email,picture"
 									callback={(e)=>{this.responseFacebook(e)}} />
 							</div>

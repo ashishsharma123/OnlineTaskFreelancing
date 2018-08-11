@@ -167,6 +167,7 @@ width:100%;}
     position:absolute;top:200px;
     left:0;
     right:0;
+    z-index: 99;
   }
   .welcome-text {
     color: #173a57;
@@ -175,6 +176,7 @@ width:100%;}
   
 .jumbotron.transparent{
     background:transparent;
+
 }
 .completeTaskBlk .block{
     background: #fff;

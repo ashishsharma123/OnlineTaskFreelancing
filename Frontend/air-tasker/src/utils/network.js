@@ -6,7 +6,7 @@ export const sendPostRequest = (url, data, isForImageUpload, token) => {
         let config;
         if(isForImageUpload) {
           config = {
-            timeout: 10000,
+            timeout: 60000,
             headers: {
              'Content-Type': 'application/json',
              'Authorization': 'Bearer '+token
@@ -15,7 +15,7 @@ export const sendPostRequest = (url, data, isForImageUpload, token) => {
         }
           else {
             config = {
-              timeout: 10000,
+              timeout: 60000,
               headers: {
                'Content-Type': 'application/json'
              }
