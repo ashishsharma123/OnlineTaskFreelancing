@@ -11,6 +11,8 @@ import { Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { showMessage } from '../../utils/message';
 import UploadPhoto from '../../components/upload-photo/upload-photo';
+import {REGISTER_STEP_1_URL } from '../../config/configuration';
+import {registerStep2} from '../../screens/sign-up/actions';
 
 /**
  * Content of Signup screen.
@@ -42,18 +44,6 @@ class Profile extends Component {
         this.setState({ [name]: e.target.value })
     }
 
-    onEmailChange = (e) => {
-        this.setState({ email: e.target.value })
-    }
-
-    showMessage() {
-        showMessage('info', "This feature will be available soon !!");
-    }
-
-    onPasswordChange = (e) => {
-        this.setState({ password: e.target.value })
-    }
-
     onImageUploadSuccess = (_imageUrl) => {
         this.props.saveImage(_imageUrl);
         this.setState({imgUrl: _imageUrl})
@@ -66,46 +56,30 @@ class Profile extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-
-        let url = (this.props.isForSignup) ? urls.SIGNUP_URL : urls.LOGIN_URL;
-        let body = {
-            "email": this.state.email,
-            "password": this.state.password
+        let postData = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            city: this.state.city,
+            roleId: this.state.roleId,
+            token: this.props.user.token
         }
-
-        this.setState({ isLoading: true });
-        sendPostRequest(url, body).then((_res) => {
-            if (_res.status == 201) {
-                showMessage('error', "Invalid credentials !!");
-                this.setState({ isLoading: false });
-                this.setState({ loginSuccess: false });
-                return;
+        this.setState({isLoading: true});
+        sendPostRequest(REGISTER_STEP_1_URL, postData).then((res)=>{
+            if(res.status == 200) {
+                this.props.registerStep1(postData);
+                showMessage('success', 'Details Updated Successfully');
+                this.setState({success: true});
             }
-            else if (_res.status == 200) {
-                showMessage('success', "Sign in Successfull !!");
-                this.setState({ isLoading: false });
-                _res = _res.data;
-                let data = {
-                    "id": (this.props.isForSignup) ? _res.insertId : _res.id,
-                    "token": (this.props.isForSignup) ? _res.access_token : _res.token,
-                    "active": (this.props.isForSignup) ? false : _res.active
-                }
-                this.props.setSignupDataInStore(data);
-                window.localStorage.setItem("user", JSON.stringify(this.props.user));
-                this.setState({ loginSuccess: true });
-                setTimeout(() => {
-                    this.props.onClose();
-                }, 100);
-            } else {
-                throw new Error('Something Went wrong')
-            }
-        }).catch(() => {
-            this.setState({ isLoading: false });
-            showMessage('error', "Error While Logging you in !!");
+            this.setState({isLoading: false});
+        })
+        .catch((error)=>{
+            showMessage('error', 'Something went wrong');
+            this.setState({isLoading: false});
         })
     }
+
     onRadioChange = (index) => {
-        this.setState({ 'role': index })
+        this.setState({ roleId: index })
     }
     render() {
         if (this.state.loginSuccess) {
@@ -141,56 +115,50 @@ class Profile extends Component {
                             
                             <h3>Personal info</h3>
                             
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" onSubmit={(e)=>{this.onSubmit(e)}}>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">First name:</label>
                                     <div class="col-lg-8">
-                                        <input class="form-control" type="text" value={this.state.firstName} />
+                                        <input class="form-control" type="text" value={this.state.firstName} onChange={(e)=>{this.onInputChange(e, 'firstName')}}/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Last name:</label>
                                     <div class="col-lg-8">
-                                        <input class="form-control" type="text" value={this.state.lastName} />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Mobile:</label>
-                                    <div class="col-lg-8">
-                                        <input class="form-control" type="text" value={this.state.contact} />
+                                        <input class="form-control" type="text" value={this.state.lastName} onChange={(e)=>{this.onInputChange(e, 'lastName')}}/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Email:</label>
                                     <div class="col-lg-8">
-                                        <input class="form-control" type="email" value={this.state.email} />
+                                        <input class="form-control" disabled type="email" value={this.state.email} onChange={(e)=>{this.onInputChange(e, 'email')}}/>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                {/* <div class="form-group">
                                     <label class="col-md-3 control-label">Password:</label>
                                     <div class="col-md-8">
                                         <input class="form-control" type="password" value={this.state.password} />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">City:</label>
                                     <div class="col-lg-8">
-                                        <input class="form-control" type="text" value={this.state.firstName} />
+                                        <input class="form-control" type="text" value={this.state.city} />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Type:</label>
                                     <div class="col-lg-8">
                                     <div class="radio">
-                                <input type="radio" name="optradio" value={this.state.roleId}  ref="role" onChange={(e)=>{this.onRadioChange(1)}}/>
+                                <input type="radio" name="optradio" value={1} checked={this.state.roleId == 1}  ref="role" onChange={(e)=>{this.onRadioChange(1)}}/>
                                 <label>Seeker</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" name="optradio" value={this.state.roleId} ref="role" onChange={(e)=>{this.onRadioChange(2)}}/>
+                                <input type="radio" name="optradio" value={2} checked={this.state.roleId == 2} ref="role" onChange={(e)=>{this.onRadioChange(2)}}/>
                                 <label>Tasker</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" name="optradio" value={this.state.roleId}  ref="role" onChange={(e)=>{this.onRadioChange(3)}}/>
+                                <input type="radio" name="optradio" value={3} checked={this.state.roleId == 3} ref="role" onChange={(e)=>{this.onRadioChange(3)}}/>
                                 <label>Both</label>
                             </div>
                                     </div>
@@ -198,9 +166,14 @@ class Profile extends Component {
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-8">
-                                        <input type="button" class="btn btn-primary" value="Save Changes" />
-                                        <span></span>
+                                        <div className="row">
+                                        <div className="col-sm-6">
+                                        <input type="submit" class="btn btn-primary" value="Save Changes" />
+                                        </div>
+                                        <div className="col-sm-6">
                                         <input type="reset" class="btn btn-default" value="Cancel" />
+                                        </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -222,8 +195,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
-    
+    registerStep2: (data) => {dispatch(registerStep2(data))},
 
 });
 
