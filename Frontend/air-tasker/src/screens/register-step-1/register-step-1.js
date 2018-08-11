@@ -25,8 +25,8 @@ class RegisterStep1 extends Component {
             firstName: this.props.user.firstName,
             lastName: this.props.user.lastName,
             isLoading: false,
-            city: "",
-            role: "",
+            city: this.props.user.city,
+            role: this.props.user.roleId,
             success: false
         }
     }

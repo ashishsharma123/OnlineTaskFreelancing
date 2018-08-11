@@ -26,7 +26,13 @@ let user = window.localStorage.getItem('user');
           id: action.payload.id,
           token: action.payload.token,
           active: action.payload.active,
-          isLoggedIn: true
+          isLoggedIn: true,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          email: action.payload.email,
+          city: action.payload.city,
+          roleId: action.payload.roleId,
+          imageUrl: action.payload.imgUrl
         })
       case actions.SIGNUP_FAILURE:
         return Object.assign({}, state, initialState);

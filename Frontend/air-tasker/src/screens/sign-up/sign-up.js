@@ -101,11 +101,22 @@ class SignUp extends Component {
 			else if (_res.status == 200) {
 				showMessage('success', "Sign in Successfull !!");
 				this.setState({ isLoading: false });
-				_res = _res.data;
+				
 				let data = {
-					"id": (this.props.isForSignup) ? _res.insertId : _res.id,
-					"token": (this.props.isForSignup) ? _res.access_token : _res.token,
-					"active": (this.props.isForSignup) ? false : _res.active
+					"id": (this.props.isForSignup) ? _res.data.insertId : _res.data.id,
+					"token": (this.props.isForSignup) ? _res.data.access_token : _res.data.token,
+					"active": (this.props.isForSignup) ? false : _res.data.active,
+					"firstName":_res.data.firstname,
+					"lastName":_res.data.lastname,
+					"contact": _res.data.contact,
+					"email": _res.data.email,
+					"imgUrl": _res.data.profilepicture,
+					"roleId": _res.data.roleid,
+					"city": _res.data.city,
+					"description": "",
+					"categories": "",
+
+					
 				}
 				this.props.setSignupDataInStore(data);
 				window.localStorage.setItem("user", JSON.stringify(this.props.user));

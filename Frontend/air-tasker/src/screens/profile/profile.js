@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { showMessage } from '../../utils/message';
 import UploadPhoto from '../../components/upload-photo/upload-photo';
 import {REGISTER_STEP_1_URL } from '../../config/configuration';
-import {registerStep2} from '../../screens/sign-up/actions';
+import {registerStep1} from '../../screens/sign-up/actions';
 
 /**
  * Content of Signup screen.
@@ -68,7 +68,6 @@ class Profile extends Component {
             if(res.status == 200) {
                 this.props.registerStep1(postData);
                 showMessage('success', 'Details Updated Successfully');
-                this.setState({success: true});
             }
             this.setState({isLoading: false});
         })
@@ -195,7 +194,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    registerStep2: (data) => {dispatch(registerStep2(data))},
+    registerStep1: (data) => {dispatch(registerStep1(data))},
 
 });
 
