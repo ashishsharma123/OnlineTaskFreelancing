@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { sendPostRequest } from '../../utils/network';
 import { UPLOAD_IMAGE_URL } from '../../config/configuration';
 import { connect } from 'react-redux';
+import { saveImage} from '../../screens/sign-up/actions';
 
 class UploadPhoto extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class UploadPhoto extends Component {
             this.props.onLoaderChange(false);
             if(_res.status === 200) {
                 this.setState({imgUrl: _res.data.imgUrl})
+                this.props.saveImage(_res.data.imgUrl);
                 this.props.onImageUploadSuccess(_res.data.imgUrl);
             }
         })
@@ -48,7 +50,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    saveImage: (imgUrl) => {dispatch(saveImage(imgUrl))}
     
 
 });

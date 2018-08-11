@@ -3,20 +3,26 @@ import  axios  from 'axios';
 export const sendPostRequest = (url, data, isForImageUpload, token) => {
     return new Promise((resolve, reject)=>{
         console.log('token ', token);
-        let headers;
+        let config;
         if(isForImageUpload) {
-          headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+token
-          }
+          config = {
+            timeout: 10000,
+            headers: {
+             'Content-Type': 'application/json',
+             'Authorization': 'Bearer '+token
+           }
+       };
         }
           else {
-            headers = {
-              'Content-Type': 'application/json'
-            }
+            config = {
+              timeout: 10000,
+              headers: {
+               'Content-Type': 'application/json'
+             }
+         };
           }
         
-        axios.post(url, data, headers)
+        axios.post(url, data, config)
           .then(function (response) {
               if(response.status === 200)
                 resolve(response.data);

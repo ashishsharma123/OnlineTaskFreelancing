@@ -51,6 +51,10 @@ let user = window.localStorage.getItem('user');
           categories: action.payload.categories,
           description: action.payload.description
         })
+      case actions.IMAGE_UPLOAD_SUCCESS:
+        return Object.assign({}, state, {
+          imageUrl: action.payload
+        })
       case actions.LOGIN_WITH_FB_SUCCESS:
         return Object.assign({}, state, {
           firstName: action.payload.firstName,
