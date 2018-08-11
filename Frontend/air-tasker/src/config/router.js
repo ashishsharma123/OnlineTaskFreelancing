@@ -7,6 +7,18 @@ import Home from '../screens/home/home';
 import RegisterStep1 from '../screens/register-step-1/register-step-1';
 import RegisterStep2 from '../screens/register-step-2/register-step-2';
 import Home2 from '../screens/home2/home2';
+import Profile from '../screens/profile/profile';
+
+
+const requireAuth = (nextState, replace) => {
+        alert("called");
+        let User = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).User);
+        if (!User.isLoggedIn) {
+          replace({
+            pathname: '/'
+          })
+        }
+}
 
 const Router = () => (
     
@@ -23,8 +35,11 @@ const Router = () => (
             <Route path='/verify' component={EmailVarificationScreen} />  
             <Route path='/register-step-1' component={RegisterStep1} />
             <Route path='/register-step-2' component={RegisterStep2} />  
-            <Route path='/home-2' component={Home2} />  
+            <Route path='/home-2' component={Home2} /> 
+            <Route path='/my-profile' component={Profile} />  
         </Switch>
 )
+
+
 
 export default Router;

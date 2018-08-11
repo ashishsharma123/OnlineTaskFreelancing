@@ -46,6 +46,7 @@ class SignUp extends Component {
 	}
 
 	responseFacebook = (response) => {
+		console.log('fb response  ', response)
 		if(response.status && response.status === "unknown") {
 			showMessage('warn', 'Facebook Login Cancelled');
 		} else {
@@ -53,6 +54,7 @@ class SignUp extends Component {
 				"firstName" : response.name.split(' ')[0],
 				"lastName" :  response.name.substring(response.name.indexOf(' ')),
 				"token": response.accessToken,
+				"email": response.email,
 				"imageUrl" : response.picture.data.url
 			}
 			this.props.loginWithFbSuccess(reqBody);

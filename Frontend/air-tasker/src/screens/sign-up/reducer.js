@@ -4,7 +4,7 @@ let user = window.localStorage.getItem('user');
     "id": '',
     "password": "",
     "name": "",
-    "contact": 0,
+    "contact": "",
     "active": 0,
     "email": "",
     "token": null,
@@ -57,6 +57,7 @@ let user = window.localStorage.getItem('user');
           lastName: action.payload.lastName,
           imageUrl: action.payload.imageUrl,
           token: action.payload.token,
+          email: action.payload.email,
           isLoginViaFb: true,
           active:1,
           isLoggedIn: true
