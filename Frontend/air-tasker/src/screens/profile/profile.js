@@ -10,6 +10,7 @@ import FacebookLogin from 'react-facebook-login';
 import { Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { showMessage } from '../../utils/message';
+import UploadPhoto from '../../components/upload-photo/upload-photo';
 
 /**
  * Content of Signup screen.
@@ -30,7 +31,7 @@ class Profile extends Component {
                 roleId: this.props.user.roleId,
                 categories: this.props.user.categories,
                 description: this.props.user.description,
-                imageUrl: this.props.user.imageUrl,
+                imgUrl: this.props.user.imageUrl,
                 isLoading: false,
             }
             
@@ -53,32 +54,14 @@ class Profile extends Component {
         this.setState({ password: e.target.value })
     }
 
-    responseFacebook = (response) => {
-        if (response.status && response.status === "unknown") {
-            showMessage('warn', 'Facebook Login Cancelled');
-        } else {
-            let reqBody = {
-                "firstName": response.name.split(' ')[0],
-                "lastName": response.name.substring(response.name.indexOf(' ')),
-                "token": response.accessToken,
-                "imageUrl": response.picture.data.url
-            }
-            this.props.loginWithFbSuccess(reqBody);
-            //this.setState({ isLoading: true });
-            this.setState({ loginSuccess: true });
-            setTimeout(() => {
-                this.props.onClose();
-            }, 100);
-            // sendPostRequest(urls.LOGIN_WITH_FB_URL, reqBody)
-            // .then(_res=>{
-            // showMessage('success', "Sign in Successfull !!");
-            // this.setState({ isLoading: false });
+    onImageUploadSuccess = (_imageUrl) => {
+        this.props.saveImage(_imageUrl);
+        this.setState({imgUrl: _imageUrl})
+    }
 
-            // })
-            // .catch(_err=>{
 
-            // })
-        }
+    onLoaderChange = (_loaderBoolean) => {
+        this.setState({isLoading: _loaderBoolean});
     }
 
     onSubmit = (event) => {
@@ -138,12 +121,16 @@ class Profile extends Component {
                     <hr />
                     <div class="row">
                         <div class="col-md-3">
-                            <div class="text-center">
+                            {/* <div class="text-center">
                                 <img src={this.state.imageUrl} class="avatar img-circle" alt="avatar" />
                                 <h6>Upload a different photo...</h6>
 
                                 <input type="file" class="form-control" />
-                            </div>
+                            </div> */}
+                            <UploadPhoto
+                                  imageUrl={this.state.imgUrl}
+                                  onImageUploadSuccess={this.onImageUploadSuccess}
+                                  onLoaderChange={this.onLoaderChange} />
                         </div>
 
 

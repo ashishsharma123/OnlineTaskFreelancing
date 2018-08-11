@@ -63,7 +63,7 @@ class SignUp extends Component {
 					let reduxData = {
 						"firstName" : response.name.split(' ')[0],
 						"lastName" :  response.name.substring(response.name.indexOf(' ')),
-						"token": _res.access_token,
+						"token": _res.data.access_token,
 						"email": response.email,
 						"imageUrl" : response.picture.data.url
 					}
