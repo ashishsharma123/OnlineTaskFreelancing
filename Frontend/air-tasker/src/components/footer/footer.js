@@ -10,40 +10,67 @@ class Footer extends Component {
         <footer class="footer-bs">
         <div class="row">
         	<div class="col-md-3 footer-brand animated fadeInLeft">
-            	<h2>Task Mafia</h2>
-                <p>Get Your Task Done Here</p>
-                <p>© All Rights Reserved</p>
+            	<h2>Taskmafia</h2>
+                <p>Taskmafia description comes here. Get Your Task Done Here</p>
+                <p>©2018 All Rights Reserved</p>
+                <div>
+                <a href="#"><img src="./images/fb.png" class="fb"/></a>
+        <a href="#"><img src="./images/twitter.png" class="twitter"/></a>
+        <a href="#"><img src="./images/play.png" class="playstore" /></a>
+        <a href="#"><img src="./images/apple.png" class="ios" /></a>
+        </div>
             </div>
-        	<div class="col-md-4 footer-nav animated fadeInUp">
-            	<h4>Discover</h4>
-            	<div class="col-md-6">
+        	<div class="col-md-9 col-sm-9 col-xs-1 2footer-nav animated fadeInUp">
+            	
+            	<div class="linkBlk">
+                <h4>Company</h4>
                     <ul class="pages">
-                        <li><a href="javascript:void(0)">Task Mafia Cards</a></li>
+                    <li><a href="javascript:void(0)">About us</a></li>
+                        <li><a href="javascript:void(0)">Blog</a></li>
+                        <li><a href="javascript:void(0)">Contact us</a></li>
+                        <li><a href="javascript:void(0)">Press & News</a></li>
+                                            </ul>
+                </div>
+               
+                
+            	<div class="linkBlk">
+                <h4>Discover</h4>
+                    <ul class="pages">
                         <li><a href="javascript:void(0)">How it works</a></li>
-                        <li><a href="javascript:void(0)">Task Mafia for business</a></li>
+                        <li><a href="javascript:void(0)">Browse tasks</a></li>
                         <li><a href="javascript:void(0)">Earn money</a></li>
-                        <li><a href="javascript:void(0)">New users FAQ</a></li>
+                        <li><a href="javascript:void(0)">Post a task</a></li>
+                        <li><a href="javascript:void(0)">Refer a friend</a></li>
+
+                        
                     </ul>
                 </div>
-            	<div class="col-md-6">
-                    <ul class="list">
-                        <li><a href="javascript:void(0)">About Us</a></li>
-                        <li><a href="javascript:void(0)">Contacts</a></li>
-                        <li><a href="javascript:void(0)">Terms & Condition</a></li>
-                        <li><a href="javascript:void(0)">Privacy Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-        	<div class="col-md-2 footer-social animated fadeInDown">
-            	<h4>Company</h4>
-            	<ul>
-                	<li><a href="javascript:void(0)">About us</a></li>
-                	<li><a href="javascript:void(0)">Careers</a></li>
-                	<li><a href="javascript:void(0)">Community guidelines</a></li>
-                	<li><a href="javascript:void(0)">Terms & conditions</a></li>
+            
+            <div class="linkBlk">
+            	<h4>Popular Categories</h4>
+            	<ul class="pages">
+                <li><a href="javascript:void(0)">Accounting</a></li>
+                    <li><a href="javascript:void(0)">Admin</a></li>
+                	<li><a href="javascript:void(0)">Design</a></li>
+                	<li><a href="javascript:void(0)">Cleaning</a></li>
+                	<li><a href="javascript:void(0)">Driving</a></li>
+                	
                 </ul>
             </div>
-        	<div class="col-md-3 footer-ns animated fadeInRight">
+        	<div class="linkBlk">
+            	<h4>Resources</h4>
+            	<ul>
+                <li><a href="javascript:void(0)">Community guidelines</a></li>
+                <li><a href="javascript:void(0)">Privacy Policy</a></li>
+                <li><a href="javascript:void(0)">Terms & Conditions</a></li>
+                   
+                	<li><a href="javascript:void(0)">Trust & Safety</a></li>
+                	<li><a href="javascript:void(0)">Support centre</a></li>
+                	
+                	
+                </ul>
+            </div>
+        	{/* <div class="footer-ns animated fadeInRight linkBlk">
             	<h4>Newsletter</h4>
                 <p>Search for latest offer at Air Tasker</p>
                 <p>
@@ -54,7 +81,14 @@ class Footer extends Component {
                       </span>
                     </div>
                  </p>
-            </div>
+            </div> */}
+        </div>
+        {/* <div class="footer-ns animated fadeInRight linkBlk">
+        <a href="#"><img src="../images/fb.png" class="fb"/></a>
+        <a href="#"><img src="../images/twitter.png" class="twitter"/></a>
+        <a href="#"><img src="../images/play.png" class="playstore" /></a>
+        <a href="#"><img src="../images/apple.png" class="ios" /></a>
+        </div> */}
         </div>
     </footer>
     );

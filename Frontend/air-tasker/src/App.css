@@ -4,6 +4,7 @@
 @import "./Styles/static-screen.css";
 @import "./Styles/sub-header.css";
 @import "./Styles/signup.css";
+@import url("https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700,800");
 
 .center-align {
   text-align: center;
@@ -191,4 +192,24 @@ button:hover {
 }
 .myclass li {
   width: 100% !important;
+}
+
+body{font-family: 'Heebo', sans-serif !important;}
+.center-align {
+  text-align: center;
+}
+.left-align {
+  text-align: left;
+}
+.right-align {
+  text-align: right;
+}
+.top-margin {
+  margin-top: 20px;
+}
+
+.email-varification-screen .custom-row {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left:20%;
 }

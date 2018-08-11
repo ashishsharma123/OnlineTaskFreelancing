@@ -10,6 +10,9 @@ import { Provider } from 'react-redux';
 import store from './config/store';
 import { PersistGate } from 'redux-persist/integration/react'
 
+import 'jquery/src/jquery';
+import 'bootstrap/dist/js/bootstrap.min.js';
+
 
 ReactDOM.render(
     <Provider store={store().store}>

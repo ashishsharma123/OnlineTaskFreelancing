@@ -51,27 +51,33 @@ class SignUp extends Component {
 			showMessage('warn', 'Facebook Login Cancelled');
 		} else {
 			let reqBody = {
-				"firstName" : response.name.split(' ')[0],
-				"lastName" :  response.name.substring(response.name.indexOf(' ')),
-				"token": response.accessToken,
-				"email": response.email,
-				"imageUrl" : response.picture.data.url
-			}
-			this.props.loginWithFbSuccess(reqBody);
-			//this.setState({ isLoading: true });
-			this.setState({ loginSuccess: true });
-			setTimeout(() => {
-				this.props.onClose();
-			}, 100);
-			// sendPostRequest(urls.LOGIN_WITH_FB_URL, reqBody)
-			// .then(_res=>{
-				// showMessage('success', "Sign in Successfull !!");
-				// this.setState({ isLoading: false });
-				
-			// })
-			// .catch(_err=>{
+				"access_token": response.accessToken
+			};
+			
+			this.setState({ isLoading: true });
+			
+			sendPostRequest(urls.LOGIN_WITH_FB_URL, reqBody)
+			.then(_res=>{
+			if(_res.status === 200) {
+					showMessage('success', "Sign in Successfull !!");
+					let reduxData = {
+						"firstName" : response.name.split(' ')[0],
+						"lastName" :  response.name.substring(response.name.indexOf(' ')),
+						"token": _res.access_token,
+						"email": response.email,
+						"imageUrl" : response.picture.data.url
+					}
+					this.props.loginWithFbSuccess(reduxData);
+					this.setState({ isLoading: false });
+					this.setState({ loginSuccess: true });
+					setTimeout(() => {
+						this.props.onClose();
+					}, 100);	
+			}			
+			})
+			.catch(_err=>{
 
-			// })
+			})
 		}
 	}
 
