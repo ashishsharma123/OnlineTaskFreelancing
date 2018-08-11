@@ -104,6 +104,9 @@ class Profile extends Component {
             showMessage('error', "Error While Logging you in !!");
         })
     }
+    onRadioChange = (index) => {
+        this.setState({ 'role': index })
+    }
     render() {
         if (this.state.loginSuccess) {
             if (this.props.user.active == 1)
