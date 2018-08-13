@@ -6,6 +6,9 @@ import { sendPostRequest } from '../../utils/network';
 import * as urls from '../../config/configuration';
 import { LoadingOverlay, Loader } from 'react-overlay-loader';
 import 'react-overlay-loader/styles.css';
+import {withRouter} from 'react-router-dom';  
+import RegisterStep1 from '../register-step-1/register-step-1'
+import RegisterStep2 from '../register-step-2/register-step-2';
 
 
 /**
@@ -14,12 +17,36 @@ import 'react-overlay-loader/styles.css';
 class Home extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isModalOpen : false
+        }
     }
+
+    getComponent() {
+        if(this.props.location.pathname == '/register-step-1') {
+            return (<RegisterStep1/>);
+        } else if(this.props.location.pathname == '/register-step-2') {
+            return (<RegisterStep2/>);
+        }
+
+    }
+
+
+    onOpenModal = () => {
+        this.setState({ isModalOpen: true });
+      };
+    
+      onCloseModal = () => {
+        this.setState({ isModalOpen: false });
+      };
 
     
 
     render() {
                 return (
+                    <div>
+                
+          
             
             <div className="wrapper">
             <section className="home-container jumbotron paddB0">
@@ -282,6 +309,8 @@ class Home extends Component {
 
 
             </div>
+            {this.getComponent()}
+            </div>
 
         );
     }
@@ -294,4 +323,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

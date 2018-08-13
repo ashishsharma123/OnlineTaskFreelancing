@@ -4,6 +4,7 @@
 @import "./Styles/static-screen.css";
 @import "./Styles/sub-header.css";
 @import "./Styles/signup.css";
+@import "./Styles/dashboard.css";
 @import url("https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700,800");
 
 .center-align {

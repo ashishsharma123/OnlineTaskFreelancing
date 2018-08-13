@@ -11,7 +11,6 @@ import { Redirect } from 'react-router-dom';
 import * as actions from './actions';
 import { ToastContainer } from 'react-toastify';
 import { showMessage } from '../../utils/message';
-
 /**
  * Content of Signup screen.
  */
