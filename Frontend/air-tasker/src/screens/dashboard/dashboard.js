@@ -23,7 +23,6 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         console.log(props);
-        alert("tehre");
         this.state = {
             password: this.props.user.password,
             contact: this.props.user.contact,

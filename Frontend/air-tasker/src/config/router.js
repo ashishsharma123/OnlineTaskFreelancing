@@ -4,7 +4,7 @@ import Login from '../screens/login/login';
 import StaticScreen from '../screens/static-screens/static-screen';
 import EmailVarificationScreen from '../screens/email-varification/email-varification';
 import Home from '../screens/home/home';
-
+import ProtectedRoute from './protected-route';
 import Home2 from '../screens/home2/home2';
 import Profile from '../screens/profile/profile';
 import Dashboard from '../screens/dashboard/dashboard';
@@ -26,8 +26,10 @@ const Router = () => (
             <Route path='/register-step-1' component={Home} />
             <Route path='/register-step-2' component={Home} />  
             <Route path='/home-2' component={Home2} /> 
-            <Route path='/my-profile' component={Profile} />  
-            <Route path='/dashboard' component={Dashboard} />  
+            {/* <Route path='/my-profile' component={Profile} />   */}
+            <ProtectedRoute path='/my-profile' component={Profile} />
+            {/* <ProtectedRoute path='/dashboard' component={Dashboard} />   */}
+            <Route path='/dashboard' component={Dashboard} />
         </Switch>
 )
 
